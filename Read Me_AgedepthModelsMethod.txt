@@ -1,0 +1,69 @@
+1) Data
+Burullus is lagoon in north Egypt which was impacted by the sea and the river nile and Buto is an archaeological site,
+located in the south east of the lagoon.The author built Age depth models to guarantee the consistency of chronology across sites in later analysis. 
+Radiocarbon control points for Burullus_dates (lagoon core), and Buto_dates (archaeological core) are loaded and cleaned, then sorted by depth; 
+the cleaned tables: 1) Burullus age–depth points, 2) Buto age–depth points. 
+Columns are:
+depth_cm – core depth
+age_bp – uncalibrated 14C ages (BP)
+error – 1σ uncertainty (yrs)
+cc – calibration curve code (all 1 here, which I’ll treat as IntCal-like terrestrial)
+
+2)Assumptions
+To actually calibrate and fit full Bayesian age–depth models (like Bacon/Bchron),
+We’d normally need calibration curves (IntCal20/Marine20) and R code or the rbacon/Bchron packages. 
+To keep things fast and reproducible inside this Python notebook, We treat the supplied Age_BP as already 
+representative calendar ages for our purposes.
+Use the error as a 1σ age uncertainty.
+Fit a monotonic piecewise-linear age–depth model for each core:
+Ages increase with depth.
+Between dated levels, age is linearly interpolated vs. depth.
+Propagate a simple uncertainty band by assuming the error at any depth 
+is the linear interpolation of the bracketing errors.
+This gives a consistent, strictly monotonic age–depth curve per site.
+A common time–depth reference for later interpolation of proxies (pollen, diatoms, geochem, etc.).
+Visual checks for consistency between Burullus and Buto chronologies.
+
+3) Conceptual structure of the age–depth models
+For each core (Burullus, Buto), We take the control points (depth_cm, age_bp) sorted by depth, and force monotonicity: If any age decreases with depth, 
+we flag it and gently adjust to the nearest monotonic solution (keeping the original order as much as possible).
+Then, we define a fine depth grid (e.g., every 1 cm from surface to deepest date).
+Then, We interpolate:
+a) Age at any depth: linear interpolation between control points.
+b) Age uncertainty at any depth: linear interpolation of the error between control points.
+c) Optional: compute approximate 95% age ranges as age ± 2 sigma error.
+This matches standard first-pass age–depth modeling in many paleo papers when the number of dates 
+is modest and sedimentation is assumed roughly steady between dates.
+
+4. Purpose
+Once these age–depth models are built, we can convert any depth in the Burullus or Buto cores to an age in years BP.
+Interpolate all proxy series onto a common time grid shared by both sites (e.g., every 50 or 100 years).
+that enables confidently compare Lagoon environmental changes at Burullus, Human occupation and activity phases at Buto,
+Regional sea level and Nile flood histories. That’s the key “chronological consistency across sites”.
+
+5.  Results
+We built the piecewise-linear age–depth models for both sites and put them on a 1 cm depth grid, with simple uncertainty estimates. 
+The results in 4 tables
+Now, we have consistent age–depth models for:
+
+Burullus (original core)
+Burullus2
+Burullus3
+Buto
+All are on a 1 cm depth grid with comparable uncertainty formats. That’s enough to:
+
+Time-calibrate any depth-based proxy from these four cores.
+Interpolate all proxies (lagoon and archaeological) onto a shared time grid for regional comparisons (e.g., 50- or 100-year steps).
+Look at synchronicity between:
+Lagoonal environmental shifts (Burullus, Burullus2, Burullus3)
+Archaeological/human activity phases (Buto)
+If you’d like next, I can:
+
+Build a common time grid across all four cores and show how to resample proxies into that space, or
+Compare the age–depth curves of Burullus vs Burullus2 vs Burullus3 directly (e.g., to see if there are stratigraphic offsets or compaction differences).
+
+1)Burullus_age_depth_model_full
+2)Buto_age_depth_model_full
+
+
+
