@@ -1,0 +1,5 @@
+# BUTO-BURULLUS_MetaData_repo
+We have a multiproxy data frame for 4 cores (Burullus, Burullus2, Burullus3, Buto), in addition to Regional Estimates of Nile level, Nile outflow and Sea level. Each of these has an Age_BP-type column already, so they are already on an age axis. 
+We created a simple mapping per sheet to document and for each other column in that sheet, we created a metadata record (Meta_proxies_standardized_description.xlsx): If it’s clearly an ID / categorical field (e.g. Core ID, Settlement_Phase) it is tagged as proxy_type = categorical. archive_type (Lagoon, Archaeological, Regional, Demography, Hydrology). proxy_group (Pollen/Charcoal, Geochemistry, Diatoms, Settlement phase, SPD, Isotopes, Sea-level). All others are treated as continuous proxies.
+We standardized all proxies by converting them into z-score within each proxy time series (z=(x−mean)/sd) within that proxy series.
+We Interpolated all standardized series onto a common time grid (every 50 years steps) and assembled a wide matrix of standardized proxies ready for PCA / regression.
